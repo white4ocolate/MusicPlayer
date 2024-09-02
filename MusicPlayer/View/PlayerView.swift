@@ -8,26 +8,33 @@
 import SwiftUI
 
 struct PlayerView: View {
+    
+    //MARK: - Properties
+    @StateObject var songVM = SongViewModel()
+    
+    //MARK: - View
     var body: some View {
-        ZStack {
-            BackgroundView()
-            List {
-                HStack {
-                    Color(.orange)
-                        .frame(width: 60, height: 60)
-                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                    VStack(alignment: .leading) {
-                        Text("Track Name")
-                            .font(.title3)
-                        Text("Artist")
-                            .font(.subheadline)
+        NavigationStack {
+            ZStack {
+                BackgroundView()
+                List {
+                    ForEach(songVM.songs) { song in
+                        SongView(song: song)
                     }
-                    Spacer()
-                    Text("03:40")
                 }
-                .listRowBackground(Color.clear)
-                .listRowSeparator(.hidden)
-            }.listStyle(.plain)
+                .listStyle(.plain)
+            }
+            .toolbar(content: {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        
+                    }, label: {
+                        Image(systemName: "plus")
+                            .font(.title2)
+                            .foregroundStyle(.white)
+                    })
+                }
+            })
         }
     }
 }
