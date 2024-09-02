@@ -11,6 +11,7 @@ struct PlayerView: View {
     
     //MARK: - Properties
     @StateObject var songVM = SongViewModel()
+    @State var isShowFiles = false
     
     //MARK: - View
     var body: some View {
@@ -27,13 +28,18 @@ struct PlayerView: View {
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        
+                        isShowFiles.toggle()
                     }, label: {
                         Image(systemName: "plus")
                             .font(.title2)
                             .foregroundStyle(.white)
                     })
                 }
+            })
+            
+            //MARK: - Files Sheet
+            .sheet(isPresented: $isShowFiles, content: {
+                ImportFileManager(songs: $songVM.songs)
             })
         }
     }

@@ -16,6 +16,7 @@
 		46E697922C85CBBA00724949 /* SongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E697912C85CBBA00724949 /* SongView.swift */; };
 		46E697942C8604B900724949 /* SongViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E697932C8604B900724949 /* SongViewModel.swift */; };
 		46E697962C8608A400724949 /* AddSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E697952C8608A400724949 /* AddSongView.swift */; };
+		46E697992C860ACB00724949 /* ImportFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E697982C860ACB00724949 /* ImportFileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		46E697912C85CBBA00724949 /* SongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongView.swift; sourceTree = "<group>"; };
 		46E697932C8604B900724949 /* SongViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongViewModel.swift; sourceTree = "<group>"; };
 		46E697952C8608A400724949 /* AddSongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSongView.swift; sourceTree = "<group>"; };
+		46E697982C860ACB00724949 /* ImportFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				46E6978A2C85B9E900724949 /* Model */,
 				46E697892C85B9E400724949 /* View */,
 				46E6978B2C85B9EE00724949 /* ViewModel */,
+				46E697972C860AB400724949 /* Service */,
 				46E6977F2C85B94000724949 /* Assets.xcassets */,
 				46E697812C85B94000724949 /* Preview Content */,
 			);
@@ -112,6 +115,14 @@
 				46E697912C85CBBA00724949 /* SongView.swift */,
 			);
 			path = SubView;
+			sourceTree = "<group>";
+		};
+		46E697972C860AB400724949 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				46E697982C860ACB00724949 /* ImportFileManager.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46E697992C860ACB00724949 /* ImportFileManager.swift in Sources */,
 				46E6978E2C85BEA500724949 /* BackgroundView.swift in Sources */,
 				46E697942C8604B900724949 /* SongViewModel.swift in Sources */,
 				46E6977E2C85B93F00724949 /* PlayerView.swift in Sources */,
