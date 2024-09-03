@@ -31,7 +31,6 @@ struct SongView: View {
                         .resizable()
                         .frame(width: 22, height: 30)
                 }
-                
             }
             VStack(alignment: .leading) {
                 Text(song.trackName)
