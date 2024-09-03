@@ -12,6 +12,8 @@ class SongViewModel: ObservableObject {
     
     //MARK: - Properties
     @Published var songs: [SongModel] = []
+    @Published var audioPlayer: AVAudioPlayer?
+    @Published var isPlaying: Bool = false
     
     //MARK: - Methods
     func durationFormated(_ duration: TimeInterval) -> String {
@@ -21,5 +23,15 @@ class SongViewModel: ObservableObject {
         formatter.zeroFormattingBehavior = .pad
         
         return formatter.string(from: duration) ?? "00:00"
+    }
+    
+    func playAudio(song: SongModel) {
+        do {
+            self.audioPlayer = try AVAudioPlayer(data: song.data)
+            self.audioPlayer?.play()
+            isPlaying.toggle()
+        } catch {
+            print("Error in play audio: \(error.localizedDescription)")
+        }
     }
 }
