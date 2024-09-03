@@ -20,7 +20,7 @@ struct PlayerView: View {
                 BackgroundView()
                 List {
                     ForEach(songVM.songs) { song in
-                        SongView(song: song)
+                        SongView(song: song, durationFormated: songVM.durationFormated)
                     }
                 }
                 .listStyle(.plain)

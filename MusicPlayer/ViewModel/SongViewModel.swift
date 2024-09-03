@@ -6,12 +6,20 @@
 //
 
 import Foundation
+import AVFoundation
 
 class SongViewModel: ObservableObject {
-//    @Published var songs: [SongModel] = [
-//        SongModel(trackName: "GhostBusters", data: Data(), artist: "Ray Parker Jr.Da", coverImage: Data(), duration: 0),
-//        SongModel(trackName: "Lose Yourself", data: Data(), artist: "Eminem", coverImage: Data(), duration: 0),
-//        SongModel(trackName: "I dont understand", data: Data(), artist: "Papich", coverImage: Data(), duration: 0)
-//    ]
+    
+    //MARK: - Properties
     @Published var songs: [SongModel] = []
+    
+    //MARK: - Methods
+    func durationFormated(_ duration: TimeInterval) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        
+        return formatter.string(from: duration) ?? "00:00"
+    }
 }
