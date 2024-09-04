@@ -43,7 +43,7 @@ struct SongView: View {
             
             if let duration = song.duration {
                 Text("\(durationFormated(duration))")
-                    
+                
             }
         }
         .listRowBackground(Color.clear)

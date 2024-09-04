@@ -12,13 +12,16 @@ struct PlayerView: View {
     //MARK: - Properties
     @StateObject var songVM: SongViewModel = SongViewModel()
     @State private var isShowFiles: Bool = false
-    @State private var showFullPlayer: Bool = true
+    @State private var isShowFullPlayer: Bool = true
+    //    @State var song: SongModel = SongModel(trackName: "test1", data: Data())
+    @Namespace private var playerAnimation
+    
     
     var frameImage: CGFloat {
-        showFullPlayer ? 320 : 20
+        isShowFullPlayer ? 240 : 20
     }
     var frameBackground: CGFloat {
-        showFullPlayer ? 320 : 40
+        isShowFullPlayer ? 320 : 40
     }
     
     //MARK: - View
@@ -26,7 +29,7 @@ struct PlayerView: View {
         NavigationStack {
             ZStack {
                 BackgroundView()
-                VStack {
+                ZStack {
                     //MARK: - List of songs
                     List {
                         ForEach(songVM.songs) { song in
@@ -35,90 +38,108 @@ struct PlayerView: View {
                                     songVM.playAudio(song: song)
                                 }
                         }
+                        //                        SongView(song: song)
+                        //                        SongView(song: song)
+                        //                        SongView(song: song)
+                        //                        SongView(song: song)
+                        //                        SongView(song: song)
+                        //                        SongView(song: song)
+                        //                        SongView(song: song)
+                        //                        SongView(song: song)
+                        //                        SongView(song: song)
+                        //                        SongView(song: song)
+                        //                        SongView(song: song)
                     }
                     .listStyle(.plain)
-                    Spacer()
-                    //MARK: - Player
-                    VStack {
-                        //MARK: - Mini player
-                        HStack {
-                            ZStack {
-                                Color.purple
-                                    .frame(width: frameBackground, height: frameBackground)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                                Image(systemName: "music.note")
-                                    .resizable()
-                                    .frame(width: frameImage, height: frameImage)
-                            }
-                            
-                            if !showFullPlayer {
-                                VStack(alignment: .leading) {
-                                    Text("track #1")
-                                        .font(.title3)
-                                    Text("unknown")
-                                        .font(.subheadline)
-                                }
-                                Spacer()
-                                Button(action: {
-                                    
-                                }, label: {
-                                    Image(systemName: "play.fill")
-                                        .resizable()
-                                        .foregroundStyle(.white)
-                                        .frame(width: 25, height: 25)
-                                })
-                            }
-                        }
-                        .foregroundStyle(.white)
-                        .padding()
-                        .background(.black.opacity(0.7))
-                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                        .padding()
+                    .foregroundStyle(.white)
+                    .safeAreaInset(edge: .bottom) {
                         
-                        //MARK: - Full player
-                        if showFullPlayer {
+                        //MARK: - Player
+                        VStack {
                             
-                            /// Description
-                            VStack {
-                                Text("track #1")
-                                    .font(.title3)
-                                Text("unknown")
-                                    .font(.subheadline)
+                            //MARK: - Mini player
+                            HStack {
+                                ZStack {
+                                    Color.purple
+                                        .frame(width: frameBackground, height: frameBackground)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                    Image(systemName: "music.note")
+                                        .resizable()
+                                        .frame(width: frameImage, height: frameImage)
+                                }
+                                
+                                if !isShowFullPlayer {
+                                    VStack(alignment: .leading) {
+                                        Text("track #1")
+                                            .font(.title3)
+                                        Text("unknown")
+                                            .font(.subheadline)
+                                    }
+                                    .matchedGeometryEffect(id: "Description", in: playerAnimation)
+                                    
+                                    Spacer()
+                                    
+                                    CustomButton(image: "play.fill", size: .title) {
+                                        
+                                    }
+                                }
                             }
                             .foregroundStyle(.white)
+                            .padding()
+                            .background(isShowFullPlayer ? .clear : .black.opacity(0.7))
+                            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                            .padding()
                             
-                            VStack {
-                                /// Duration
-                                HStack {
-                                    Text("00:00")
-                                    Spacer()
-                                    Text("03:21")
+                            //MARK: - Full player
+                            if isShowFullPlayer {
+                                VStack {
+                                    /// Description
+                                    VStack {
+                                        Text("track #1")
+                                            .font(.title3)
+                                        Text("unknown")
+                                            .font(.subheadline)
+                                    }
+                                    .foregroundStyle(.white)
+                                    .matchedGeometryEffect(id: "Description", in: playerAnimation)
+                                    .padding(.top)
+                                    
+                                    VStack {
+                                        /// Duration
+                                        HStack {
+                                            Text("00:00")
+                                            Spacer()
+                                            Text("03:21")
+                                        }
+                                        .durationFont()
+                                        .padding()
+                                        
+                                        ///Slider
+                                        Divider()
+                                        
+                                        HStack(spacing: 40) {
+                                            CustomButton(image: "backward.end.fill", size: .title2) {
+                                                
+                                            }
+                                            CustomButton(image: "play.fill", size: .largeTitle) {
+                                                
+                                            }
+                                            CustomButton(image: "forward.end.fill", size: .title2) {
+                                                
+                                            }
+                                        }
+                                        .foregroundStyle(.white)
+                                    }
+                                    .padding(.horizontal, 30)
                                 }
-                                .durationFont()
-                                .padding()
-                                
-                                ///Slider
-                                Divider()
-                                
-                                HStack(spacing: 40) {
-                                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                                        Image(systemName: "backward.end.fill")
-                                    })
-                                    Button(action: {}, label: {
-                                        Image(systemName: "play.fill")
-                                    })
-                                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                                        Image(systemName: "forward.end.fill")
-                                    })
-                                }
-                                .foregroundStyle(.white)
                             }
+                            
                         }
-                        
-                    }
-                    .onTapGesture {
-                        withAnimation(.spring) {
-                            self.showFullPlayer.toggle()
+                        .frame(height: isShowFullPlayer ? SizeConstants.fullPlayer : SizeConstants.miniPlayer)
+                        .onTapGesture {
+                            withAnimation(.spring) {
+                                self.isShowFullPlayer.toggle()
+                            }
                         }
                     }
                 }
@@ -139,8 +160,20 @@ struct PlayerView: View {
             //MARK: - Files Sheet
             .sheet(isPresented: $isShowFiles, content: {
                 ImportFileManager(songs: $songVM.songs)
+                    .ignoresSafeArea()
             })
         }
+    }
+    
+    //MARK: - Methods
+    private func CustomButton(image: String, size: Font, action: @escaping ()->()) -> some View {
+        Button(action: {
+            action()
+        }, label: {
+            Image(systemName: image)
+                .foregroundStyle(.white)
+                .font(size)
+        })
     }
 }
 
