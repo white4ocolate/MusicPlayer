@@ -43,4 +43,13 @@ class SongViewModel: ObservableObject {
             print("Error in play audio: \(error.localizedDescription)")
         }
     }
+    
+    func playPause() {
+        if isPlaying {
+            self.audioPlayer?.pause()
+        } else {
+            self.audioPlayer?.play()
+        }
+        isPlaying.toggle()
+    }
 }

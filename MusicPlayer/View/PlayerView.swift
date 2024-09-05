@@ -13,10 +13,11 @@ struct PlayerView: View {
     @StateObject var songVM: SongViewModel = SongViewModel()
     @State private var isShowFiles: Bool = false
     @State private var isShowFullPlayer: Bool = false
-    //    @State var song: SongModel = SongModel(trackName: "test1", data: Data())
     @Namespace private var playerAnimation
     
-    
+    var playButtonImage: String {
+        return songVM.isPlaying ? "pause.fill" : "play.fill"
+    }
     var frameImage: CGFloat {
         isShowFullPlayer ? 240 : 20
     }
@@ -35,20 +36,11 @@ struct PlayerView: View {
                         ForEach(songVM.songs) { song in
                             SongView(song: song, durationFormated: songVM.durationFormated)
                                 .onTapGesture {
-                                    songVM.playAudio(song: song)
+                                    if songVM.currentSong != song {
+                                        songVM.playAudio(song: song)
+                                    }
                                 }
                         }
-                        //                        SongView(song: song)
-                        //                        SongView(song: song)
-                        //                        SongView(song: song)
-                        //                        SongView(song: song)
-                        //                        SongView(song: song)
-                        //                        SongView(song: song)
-                        //                        SongView(song: song)
-                        //                        SongView(song: song)
-                        //                        SongView(song: song)
-                        //                        SongView(song: song)
-                        //                        SongView(song: song)
                     }
                     .listStyle(.plain)
                     .foregroundStyle(.white)
@@ -111,19 +103,14 @@ struct PlayerView: View {
                 }
                 if !isShowFullPlayer {
                     VStack(alignment: .leading) {
-                        if let currentSong = songVM.currentSong {
-                            Text(currentSong.trackName)
-                                .font(.title3)
-                            Text(currentSong.artist ?? "unknown")
-                                .font(.subheadline)
-                        }
+                        SongDescription()
                     }
                     .matchedGeometryEffect(id: "Description", in: playerAnimation)
                     
                     Spacer()
                     
-                    CustomButton(image: "play.fill", size: .title) {
-                        
+                    CustomButton(image: playButtonImage, size: .title) {
+                        songVM.playPause()
                     }
                 }
             }
@@ -138,12 +125,7 @@ struct PlayerView: View {
                 VStack {
                     /// Description
                     VStack {
-                        if let currentSong = songVM.currentSong {
-                            Text(currentSong.trackName)
-                                .font(.title3)
-                            Text(currentSong.artist ?? "unknown")
-                                .font(.subheadline)
-                        }
+                        SongDescription()
                     }
                     .foregroundStyle(.white)
                     .matchedGeometryEffect(id: "Description", in: playerAnimation)
@@ -166,8 +148,8 @@ struct PlayerView: View {
                             CustomButton(image: "backward.end.fill", size: .title2) {
                                 
                             }
-                            CustomButton(image: "play.fill", size: .largeTitle) {
-                                
+                            CustomButton(image: playButtonImage, size: .largeTitle) {
+                                songVM.playPause()
                             }
                             CustomButton(image: "forward.end.fill", size: .title2) {
                                 
@@ -192,6 +174,15 @@ struct PlayerView: View {
         })
     }
     
+    @ViewBuilder
+    private func SongDescription() -> some View {
+        if let currentSong = songVM.currentSong {
+            Text(currentSong.trackName)
+                .font(.title3)
+            Text(currentSong.artist ?? "unknown")
+                .font(.subheadline)
+        }
+    }
     
 }
 
