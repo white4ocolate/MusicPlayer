@@ -129,20 +129,30 @@ struct PlayerView: View {
                     }
                     .foregroundStyle(.white)
                     .matchedGeometryEffect(id: "Description", in: playerAnimation)
-                    .padding(.top)
                     
                     VStack {
                         /// Duration
                         HStack {
-                            Text("00:00")
+                            Text("\(songVM.durationFormated(songVM.currentTime))")
                             Spacer()
-                            Text("03:21")
+                            Text("\(songVM.durationFormated(songVM.totalTime))")
                         }
                         .durationFont()
                         .padding()
                         
                         ///Slider
-                        Divider()
+                        Slider(value: $songVM.currentTime, in: 0...songVM.totalTime) { editing in
+                            if !editing {
+                                songVM.seekTime(time: songVM.currentTime)
+                            }
+                        }
+                        .offset(y: -18)
+                        .onAppear {
+                            Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                                songVM.updateProgress()
+                            }
+                        }
+                        .padding(.bottom, 70)
                         
                         HStack(spacing: 40) {
                             CustomButton(image: "backward.end.fill", size: .title2) {

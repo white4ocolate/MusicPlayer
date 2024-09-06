@@ -15,6 +15,8 @@ class SongViewModel: ObservableObject {
     @Published var audioPlayer: AVAudioPlayer?
     @Published var isPlaying: Bool = false
     @Published var currentIndex: Int?
+    @Published var currentTime: TimeInterval = 0.0
+    @Published var totalTime: TimeInterval = 0.0
     
     var currentSong: SongModel? {
         guard let currentIndex = currentIndex, songs.indices.contains(currentIndex) else { return nil }
@@ -36,12 +38,22 @@ class SongViewModel: ObservableObject {
             self.audioPlayer = try AVAudioPlayer(data: song.data)
             self.audioPlayer?.play()
             isPlaying.toggle()
+            totalTime = audioPlayer?.duration ?? 0.0
             if let index = songs.firstIndex(where: { $0.id == song.id }) {
                 currentIndex = index
             }
         } catch {
             print("Error in play audio: \(error.localizedDescription)")
         }
+    }
+    
+    func seekTime(time: TimeInterval) {
+        audioPlayer?.currentTime = time
+    }
+    
+    func updateProgress() {
+        guard let player = audioPlayer else { return }
+        currentTime = player.currentTime
     }
     
     func playPause() {
