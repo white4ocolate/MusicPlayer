@@ -15,12 +15,6 @@ struct PlayerView: View {
     @State private var isShowFullPlayer: Bool = false
     @Namespace private var playerAnimation
     
-    var playButtonImage: String {
-        return songVM.isPlaying ? "pause.fill" : "play.fill"
-    }
-    var frameImage: CGFloat {
-        isShowFullPlayer ? 240 : 20
-    }
     var frameBackground: CGFloat {
         isShowFullPlayer ? 320 : 40
     }
@@ -85,22 +79,9 @@ struct PlayerView: View {
         VStack {
             //MARK: - Mini player
             HStack {
-                if let data = songVM.currentSong?.coverImage, let uiImage = UIImage(data: data) {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: frameBackground, height: frameBackground)
-                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                } else {
-                    ZStack{
-                        Color.purple
-                            .frame(width: frameBackground, height: frameBackground)
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                        Image(systemName: "music.note")
-                            .resizable()
-                            .frame(width: frameImage, height: frameImage)
-                    }
-                }
+                
+                SongImageView(imageData: songVM.currentSong?.coverImage, size: frameBackground)
+                
                 if !isShowFullPlayer {
                     VStack(alignment: .leading) {
                         SongDescription()
@@ -109,7 +90,7 @@ struct PlayerView: View {
                     
                     Spacer()
                     
-                    CustomButton(image: playButtonImage, size: .title) {
+                    CustomButton(image: songVM.isPlaying ? "pause.fill" : "play.fill", size: .title) {
                         songVM.playPause()
                     }
                 }
@@ -156,13 +137,13 @@ struct PlayerView: View {
                         
                         HStack(spacing: 40) {
                             CustomButton(image: "backward.end.fill", size: .title2) {
-                                
+                                songVM.backward()
                             }
-                            CustomButton(image: playButtonImage, size: .largeTitle) {
+                            CustomButton(image: songVM.isPlaying ? "pause.circle.fill" : "play.circle.fill", size: .largeTitle) {
                                 songVM.playPause()
                             }
                             CustomButton(image: "forward.end.fill", size: .title2) {
-                                
+                                songVM.forward()
                             }
                         }
                         .foregroundStyle(.white)
@@ -170,7 +151,6 @@ struct PlayerView: View {
                     .padding(.horizontal, 30)
                 }
             }
-            
         }
     }
     
@@ -193,7 +173,6 @@ struct PlayerView: View {
                 .font(.subheadline)
         }
     }
-    
 }
 
 #Preview {

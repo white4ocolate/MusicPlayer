@@ -16,22 +16,9 @@ struct SongView: View {
     //MARK: - View
     var body: some View {
         HStack {
-            if let data = song.coverImage, let uiImage = UIImage(data: data) {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 60, height: 60)
-                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-            } else {
-                ZStack{
-                    Color.purple
-                        .frame(width: 60, height: 60)
-                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                    Image(systemName: "music.note")
-                        .resizable()
-                        .frame(width: 22, height: 30)
-                }
-            }
+            
+            SongImageView(imageData: song.coverImage, size: 60)
+            
             VStack(alignment: .leading) {
                 Text(song.trackName)
                     .font(.title3)

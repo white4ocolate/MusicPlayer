@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4632A0CD2C8B5E2B006A8B1E /* SongImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4632A0CC2C8B5E2B006A8B1E /* SongImageView.swift */; };
 		469E52D72C88A54200C16C7D /* SizeConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469E52D62C88A54200C16C7D /* SizeConstants.swift */; };
 		46E6977C2C85B93F00724949 /* MusicPlayerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E6977B2C85B93F00724949 /* MusicPlayerApp.swift */; };
 		46E6977E2C85B93F00724949 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E6977D2C85B93F00724949 /* PlayerView.swift */; };
@@ -18,11 +19,11 @@
 		46E697942C8604B900724949 /* SongViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E697932C8604B900724949 /* SongViewModel.swift */; };
 		46E697962C8608A400724949 /* AddSongView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E697952C8608A400724949 /* AddSongView.swift */; };
 		46E697992C860ACB00724949 /* ImportFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E697982C860ACB00724949 /* ImportFileManager.swift */; };
-		46E6979B2C8754B000724949 /* SmallPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E6979A2C8754B000724949 /* SmallPlayerView.swift */; };
 		46E6979E2C8783B100724949 /* UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E6979D2C8783B100724949 /* UIExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4632A0CC2C8B5E2B006A8B1E /* SongImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongImageView.swift; sourceTree = "<group>"; };
 		469E52D62C88A54200C16C7D /* SizeConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeConstants.swift; sourceTree = "<group>"; };
 		46E697782C85B93F00724949 /* MusicPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46E6977B2C85B93F00724949 /* MusicPlayerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayerApp.swift; sourceTree = "<group>"; };
@@ -35,7 +36,6 @@
 		46E697932C8604B900724949 /* SongViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongViewModel.swift; sourceTree = "<group>"; };
 		46E697952C8608A400724949 /* AddSongView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSongView.swift; sourceTree = "<group>"; };
 		46E697982C860ACB00724949 /* ImportFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportFileManager.swift; sourceTree = "<group>"; };
-		46E6979A2C8754B000724949 /* SmallPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallPlayerView.swift; sourceTree = "<group>"; };
 		46E6979D2C8783B100724949 /* UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -120,7 +120,7 @@
 			children = (
 				46E6978D2C85BEA500724949 /* BackgroundView.swift */,
 				46E697912C85CBBA00724949 /* SongView.swift */,
-				46E6979A2C8754B000724949 /* SmallPlayerView.swift */,
+				4632A0CC2C8B5E2B006A8B1E /* SongImageView.swift */,
 			);
 			path = SubView;
 			sourceTree = "<group>";
@@ -212,8 +212,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46E6979B2C8754B000724949 /* SmallPlayerView.swift in Sources */,
 				46E697992C860ACB00724949 /* ImportFileManager.swift in Sources */,
+				4632A0CD2C8B5E2B006A8B1E /* SongImageView.swift in Sources */,
 				469E52D72C88A54200C16C7D /* SizeConstants.swift in Sources */,
 				46E6978E2C85BEA500724949 /* BackgroundView.swift in Sources */,
 				46E6979E2C8783B100724949 /* UIExtension.swift in Sources */,
@@ -362,8 +362,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -372,9 +371,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = whitechocolate.MusicPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -392,8 +395,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -402,9 +404,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = whitechocolate.MusicPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
