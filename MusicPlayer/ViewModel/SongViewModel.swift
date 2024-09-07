@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-class SongViewModel: ObservableObject {
+class SongViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     //MARK: - Properties
     @Published var songs: [SongModel] = []
@@ -36,6 +36,7 @@ class SongViewModel: ObservableObject {
     func playAudio(song: SongModel) {
         do {
             self.audioPlayer = try AVAudioPlayer(data: song.data)
+            self.audioPlayer?.delegate = self
             self.audioPlayer?.play()
             isPlaying = true
             totalTime = audioPlayer?.duration ?? 0.0
@@ -75,5 +76,11 @@ class SongViewModel: ObservableObject {
         guard let currentIndex = currentIndex else { return }
         let previoustIndex = currentIndex > 0 ? currentIndex - 1 : songs.count - 1
         playAudio(song: songs[previoustIndex])
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if flag {
+            forward()
+        }
     }
 }

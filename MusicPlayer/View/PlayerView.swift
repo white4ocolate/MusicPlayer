@@ -18,13 +18,16 @@ struct PlayerView: View {
     var frameBackground: CGFloat {
         isShowFullPlayer ? 320 : 40
     }
+    var spaceMiniplayer: CGFloat {
+        songVM.isPlaying ? 20 : 17
+    }
     
     //MARK: - View
     var body: some View {
         NavigationStack {
             ZStack {
                 BackgroundView()
-                ZStack {
+                VStack {
                     //MARK: - List of songs
                     List {
                         ForEach(songVM.songs) { song in
@@ -38,7 +41,7 @@ struct PlayerView: View {
                     }
                     .listStyle(.plain)
                     .foregroundStyle(.white)
-                    .safeAreaInset(edge: .bottom) {
+//                    .safeAreaInset(edge: .bottom) {
                         
                         //MARK: - Player
                         if (songVM.currentSong != nil) {
@@ -50,7 +53,7 @@ struct PlayerView: View {
                                     }
                                 }
                         }
-                    }
+//                    }
                 }
             }
             .toolbar(content: {
@@ -90,8 +93,16 @@ struct PlayerView: View {
                     
                     Spacer()
                     
-                    CustomButton(image: songVM.isPlaying ? "pause.fill" : "play.fill", size: .title) {
-                        songVM.playPause()
+                    HStack(spacing: spaceMiniplayer) {
+                        CustomButton(image: "backward.end", size: .title2) {
+                            songVM.backward()
+                        }
+                        CustomButton(image: songVM.isPlaying ? "pause" : "play", size: .title) {
+                            songVM.playPause()
+                        }
+                        CustomButton(image: "forward.end", size: .title2) {
+                            songVM.forward()
+                        }
                     }
                 }
             }
