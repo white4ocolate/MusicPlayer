@@ -38,6 +38,7 @@ struct PlayerView: View {
                                     }
                                 }
                         }
+                        .onDelete(perform: songVM.deleteSong)
                     }
                     .listStyle(.plain)
                     .foregroundStyle(.white)

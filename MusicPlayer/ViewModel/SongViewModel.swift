@@ -19,8 +19,18 @@ class SongViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var totalTime: TimeInterval = 0.0
     
     var currentSong: SongModel? {
-        guard let currentIndex = currentIndex, songs.indices.contains(currentIndex) else { return nil }
-        return songs[currentIndex]
+        get {
+            guard let currentIndex = currentIndex, songs.indices.contains(currentIndex) else { return nil }
+            return songs[currentIndex]
+        }
+        set {
+            if newValue == nil {
+                currentIndex = nil
+            }
+            else if let newSong = newValue, let index = songs.firstIndex(of: newSong) {
+                currentIndex = index
+            }
+        }
     }
     
     //MARK: - Methods
@@ -66,6 +76,12 @@ class SongViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
         isPlaying.toggle()
     }
     
+    func stopAudio() {
+        self.audioPlayer?.stop()
+        self.audioPlayer = nil
+        isPlaying = false
+    }
+    
     func forward() {
         guard let currentIndex = currentIndex else { return }
         let nextIndex = currentIndex + 1 < songs.count ? currentIndex + 1 : 0
@@ -81,6 +97,16 @@ class SongViewModel: NSObject, ObservableObject, AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if flag {
             forward()
+        }
+    }
+    
+    func deleteSong(indexSet: IndexSet) {
+        if let first = indexSet.first {
+            if self.currentSong == songs[first] {
+                self.currentSong = nil
+                self.stopAudio()
+            }
+            songs.remove(at: first)
         }
     }
 }
