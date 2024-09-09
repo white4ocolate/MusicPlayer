@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct PlayerView: View {
     
     //MARK: - Properties
+    @ObservedResults(SongModel.self) var songs
     @StateObject var songVM: SongViewModel = SongViewModel()
     @State private var isShowFiles: Bool = false
     @State private var isShowFullPlayer: Bool = false
@@ -30,7 +32,7 @@ struct PlayerView: View {
                 VStack {
                     //MARK: - List of songs
                     List {
-                        ForEach(songVM.songs) { song in
+                        ForEach(songs) { song in
                             SongView(song: song, durationFormated: songVM.durationFormated)
                                 .onTapGesture {
                                     if songVM.currentSong != song {
@@ -72,7 +74,7 @@ struct PlayerView: View {
             
             //MARK: - Files Sheet
             .sheet(isPresented: $isShowFiles, content: {
-                ImportFileManager(songs: $songVM.songs)
+                ImportFileManager()
                     .ignoresSafeArea()
             })
         }

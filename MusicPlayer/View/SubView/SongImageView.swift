@@ -28,7 +28,7 @@ struct SongImageView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                 Image(systemName: "music.note")
                     .resizable()
-                    .frame(width: size, height: size)
+                    .frame(width: size / 2.3, height: size / 2)
             }
         }
     }

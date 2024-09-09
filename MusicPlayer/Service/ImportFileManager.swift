@@ -8,11 +8,10 @@
 import Foundation
 import SwiftUI
 import AVFoundation
+import RealmSwift
 
 /// Allows choose and import audio fles.
 struct ImportFileManager: UIViewControllerRepresentable {
-    
-    @Binding var songs: [SongModel]
     /// Coordinator manages tasks between SwiftUI and UIKit.
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -36,6 +35,7 @@ struct ImportFileManager: UIViewControllerRepresentable {
     class Coordinator: NSObject, UIDocumentPickerDelegate {
         
         var parent: ImportFileManager
+        @ObservedResults(SongModel.self) var songs
         
         init(parent: ImportFileManager) {
             self.parent = parent
@@ -69,10 +69,10 @@ struct ImportFileManager: UIViewControllerRepresentable {
                         }
                     }
                     song.duration = CMTimeGetSeconds(try await asset.load(.duration))
-                    if !self.parent.songs.contains(where: { $0.trackName == song.trackName }) {
-                        await MainActor.run {
-                            self.parent.songs.append(song)
-                        }
+                    
+                    let isDuplicate = songs.contains{ $0.trackName == song.trackName && $0.artist == song.artist }
+                    if !isDuplicate {
+                        $songs.append(song)
                     } else {
                         print("Song is exists already")
                     }
