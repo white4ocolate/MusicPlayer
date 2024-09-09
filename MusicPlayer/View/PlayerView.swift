@@ -44,19 +44,19 @@ struct PlayerView: View {
                     }
                     .listStyle(.plain)
                     .foregroundStyle(.white)
-//                    .safeAreaInset(edge: .bottom) {
-                        
-                        //MARK: - Player
-                        if (songVM.currentSong != nil) {
-                            Player()
-                                .frame(height: isShowFullPlayer ? SizeConstants.fullPlayer : SizeConstants.miniPlayer)
-                                .onTapGesture {
-                                    withAnimation(.spring) {
-                                        self.isShowFullPlayer.toggle()
-                                    }
+                    //                    .safeAreaInset(edge: .bottom) {
+                    
+                    //MARK: - Player
+                    if (songVM.currentSong != nil) {
+                        Player()
+                            .frame(height: isShowFullPlayer ? SizeConstants.fullPlayer : SizeConstants.miniPlayer)
+                            .onTapGesture {
+                                withAnimation(.spring) {
+                                    self.isShowFullPlayer.toggle()
                                 }
-                        }
-//                    }
+                            }
+                    }
+                    //                    }
                 }
             }
             .toolbar(content: {
@@ -97,13 +97,13 @@ struct PlayerView: View {
                     Spacer()
                     
                     HStack(spacing: spaceMiniplayer) {
-                        CustomButton(image: "backward.end", size: .title2) {
+                        CustomButton(image: "backward.end", size: 25) {
                             songVM.backward()
                         }
-                        CustomButton(image: songVM.isPlaying ? "pause" : "play", size: .title) {
+                        CustomButton(image: songVM.isPlaying ? "pause" : "play", size: 30) {
                             songVM.playPause()
                         }
-                        CustomButton(image: "forward.end", size: .title2) {
+                        CustomButton(image: "forward.end", size: 25) {
                             songVM.forward()
                         }
                     }
@@ -150,17 +150,33 @@ struct PlayerView: View {
                         .padding(.bottom, 70)
                         
                         HStack(spacing: 40) {
-                            CustomButton(image: "backward.end.fill", size: .title2) {
+                            CustomButton(image: "backward.end.fill", size: 30) {
                                 songVM.backward()
                             }
-                            CustomButton(image: songVM.isPlaying ? "pause.circle.fill" : "play.circle.fill", size: .largeTitle) {
+                            CustomButton(image: songVM.isPlaying ? "pause.circle.fill" : "play.circle.fill", size: 70) {
                                 songVM.playPause()
                             }
-                            CustomButton(image: "forward.end.fill", size: .title2) {
+                            CustomButton(image: "forward.end.fill", size: 30) {
                                 songVM.forward()
                             }
                         }
                         .foregroundStyle(.white)
+                        
+                        HStack {
+                            CustomButton(image: "repeat", size: 25) {
+                                songVM.repeatSong()
+                            }
+                            .opacity(songVM.isRepeat ? 1 : 0.4)
+                            
+                            Spacer()
+                            
+                            CustomButton(image: "shuffle", size: 25) {
+                                songVM.shuffleSongs()
+                            }
+                            .opacity(songVM.isShuffle ? 1 : 0.4)
+                        }
+                        .padding(.vertical, 30)
+                        .padding()
                     }
                     .padding(.horizontal, 30)
                 }
@@ -168,13 +184,14 @@ struct PlayerView: View {
         }
     }
     
-    private func CustomButton(image: String, size: Font, action: @escaping ()->()) -> some View {
+    private func CustomButton(image: String, size: CGFloat, action: @escaping ()->()) -> some View {
         Button(action: {
             action()
         }, label: {
             Image(systemName: image)
+                .resizable()
                 .foregroundStyle(.white)
-                .font(size)
+                .frame(width: size, height: size)
         })
     }
     
