@@ -14,15 +14,13 @@ struct PlayerView: View {
     @ObservedResults(SongModel.self) var songs
     @StateObject var songVM: SongViewModel = SongViewModel()
     @State private var isShowFiles: Bool = false
-    @State private var isShowFullPlayer: Bool = false
+    @State private var isShowFullPlayer: Bool = true
     @Namespace private var playerAnimation
     
     var frameBackground: CGFloat {
         isShowFullPlayer ? 320 : 40
     }
-    var spaceMiniplayer: CGFloat {
-        songVM.isPlaying ? 20 : 17
-    }
+    var spaceMiniplayer: CGFloat = 30
     
     //MARK: - View
     var body: some View {
@@ -44,10 +42,9 @@ struct PlayerView: View {
                     }
                     .listStyle(.plain)
                     .foregroundStyle(.white)
-                    //                    .safeAreaInset(edge: .bottom) {
                     
                     //MARK: - Player
-                    if (songVM.currentSong != nil) {
+                    if (songVM.currentSong == nil) {
                         Player()
                             .frame(height: isShowFullPlayer ? SizeConstants.fullPlayer : SizeConstants.miniPlayer)
                             .onTapGesture {
@@ -55,8 +52,17 @@ struct PlayerView: View {
                                     self.isShowFullPlayer.toggle()
                                 }
                             }
+                            .gesture(
+                                    DragGesture()
+                                        .onEnded { value in
+                                            if value.translation.height > 50 {
+                                                withAnimation(.spring) {
+                                                    self.isShowFullPlayer.toggle()
+                                                }
+                                            }
+                                        }
+                                )
                     }
-                    //                    }
                 }
             }
             .toolbar(content: {
@@ -97,15 +103,18 @@ struct PlayerView: View {
                     Spacer()
                     
                     HStack(spacing: spaceMiniplayer) {
-                        CustomButton(image: "backward.end", size: 25) {
+                        CustomButton(image: "backward.end", size: 20) {
                             songVM.backward()
                         }
-                        CustomButton(image: songVM.isPlaying ? "pause" : "play", size: 30) {
+                        .matchedGeometryEffect(id: "Backward", in: playerAnimation)
+                        CustomButton(image: songVM.isPlaying ? "pause.fill" : "play", size: 30) {
                             songVM.playPause()
                         }
-                        CustomButton(image: "forward.end", size: 25) {
+                        .matchedGeometryEffect(id: "Play", in: playerAnimation)
+                        CustomButton(image: "forward.end", size: 20) {
                             songVM.forward()
                         }
+                        .matchedGeometryEffect(id: "Forward", in: playerAnimation)
                     }
                 }
             }
@@ -124,6 +133,7 @@ struct PlayerView: View {
                     }
                     .foregroundStyle(.white)
                     .matchedGeometryEffect(id: "Description", in: playerAnimation)
+                    .padding(.bottom, 20)
                     
                     VStack {
                         /// Duration
@@ -133,7 +143,7 @@ struct PlayerView: View {
                             Text("\(songVM.durationFormated(songVM.totalTime))")
                         }
                         .durationFont()
-                        .padding()
+                        .padding(.bottom, 15)
                         
                         ///Slider
                         Slider(value: $songVM.currentTime, in: 0...songVM.totalTime) { editing in
@@ -147,20 +157,24 @@ struct PlayerView: View {
                                 songVM.updateProgress()
                             }
                         }
-                        .padding(.bottom, 70)
+                        .padding(.bottom, 10)
                         
                         HStack(spacing: 40) {
                             CustomButton(image: "backward.end.fill", size: 30) {
                                 songVM.backward()
                             }
-                            CustomButton(image: songVM.isPlaying ? "pause.circle.fill" : "play.circle.fill", size: 70) {
+                            .matchedGeometryEffect(id: "Backward", in: playerAnimation)
+                            CustomButton(image: songVM.isPlaying ? "pause.circle.fill" : "play.circle.fill", size: 60) {
                                 songVM.playPause()
                             }
+                            .matchedGeometryEffect(id: "Play", in: playerAnimation)
                             CustomButton(image: "forward.end.fill", size: 30) {
                                 songVM.forward()
                             }
+                            .matchedGeometryEffect(id: "Forward", in: playerAnimation)
                         }
                         .foregroundStyle(.white)
+                        .padding(.bottom, 20)
                         
                         HStack {
                             CustomButton(image: "repeat", size: 25) {
