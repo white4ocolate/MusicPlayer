@@ -14,7 +14,7 @@ struct PlayerView: View {
     @ObservedResults(SongModel.self) var songs
     @StateObject var songVM: SongViewModel = SongViewModel()
     @State private var isShowFiles: Bool = false
-    @State private var isShowFullPlayer: Bool = true
+    @State private var isShowFullPlayer: Bool = false
     @Namespace private var playerAnimation
     
     var frameBackground: CGFloat {
@@ -44,7 +44,7 @@ struct PlayerView: View {
                     .foregroundStyle(.white)
                     
                     //MARK: - Player
-                    if (songVM.currentSong == nil) {
+                    if (songVM.currentSong != nil) {
                         Player()
                             .frame(height: isShowFullPlayer ? SizeConstants.fullPlayer : SizeConstants.miniPlayer)
                             .onTapGesture {
